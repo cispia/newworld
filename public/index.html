@@ -282,6 +282,12 @@
 			log.style.display = 'none';
 			myimg.style.display = 'block';
 		}
+		//退出登录
+		btn_out.onclick=function(){
+			localStorage.clear();
+			myimg.style.display='none';
+			log.style.display='block';
+		}
 		//搜索
 		btn_search.onclick=function(){
 			con.style.display='none';
@@ -291,12 +297,6 @@
 		back.onclick=function(){
 			con.style.display='block';
 			booklist.style.display='none';
-		}
-		//退出登录
-		btn_out.onclick=function(){
-			localStorage.clear();
-			myimg.style.display='none';
-			log.style.display='block';
 		}
 	</script>
 
