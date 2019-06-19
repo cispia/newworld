@@ -6,7 +6,7 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1.0">
 		<meta http-equiv="X-UA-Compatible" content="ie=edge">
 		<title>首页</title>
-		<script src="./javascripts/jquery.min.js"></script>
+		<script src="javascripts/jquery.min.js"></script>
 		<!-- 最新版本的 Bootstrap 核心 CSS 文件 -->
 		<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@3.3.7/dist/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
 		<!-- 最新的 Bootstrap 核心 JavaScript 文件 -->
@@ -119,9 +119,9 @@
 					<span data-toggle="modal" data-target="#logup" class="logup">注册</span>
 				</div>
 				<!--头像-->
-				<div id="myimg" style="float: right;width: 70px;height: 70px;display: none;">
+				<div id="myimg" style="float: right;width: 70px;height: 70px;display: none;position: relative;">
 					<img src="https://ss1.baidu.com/9vo3dSag_xI4khGko9WTAnF6hhy/image/h%3D300/sign=ad628627aacc7cd9e52d32d909032104/32fa828ba61ea8d3fcd2e9ce9e0a304e241f5803.jpg" alt="" id="imgs" style="width: 70px;height: 70px;border-radius: 50%;" />
-					<div id="div" style="width: 130px;height: 110px;background: #aaa;text-align: center;line-height: 30px;display: none;margin-left: -20px;">
+					<div id="div" style="width: 130px;height: 110px;background: #aaa;text-align: center;line-height: 30px;display: none;margin-left: -20px;position: absolute;left: 0;bottom:-110px;z-index: 10;">
 						<p style="border-bottom: 1px dotted #fff;">
 							<a href="booklist.html" style="text-decoration: none;color: #fff;">书架</a>
 						</p>
@@ -278,10 +278,19 @@
 			$("#div").fadeOut(1000);
 		}
 		login.onclick = function() {
-			console.log(111);
 			log.style.display = 'none';
 			myimg.style.display = 'block';
 		}
+        // 点击注册确定
+        $('#btn_up').on('click',function(){
+            console.log(123);
+            $('#logup').modal('toggle');
+        })
+        // 点击登录确定
+        $('#btn_in').on('click',function(){
+            console.log(123);
+            $('#login').modal('toggle');
+        })
 		//退出登录
 		btn_out.onclick=function(){
 			localStorage.clear();

@@ -64,11 +64,10 @@
                 <span data-toggle="modal" data-target="#logup" class="logup">注册</span>
             </div>
             <!--头像-->
-            <div id="myimg" style="float: right;width: 70px;height: 70px;display: none;">
+            <div id="myimg" style="float: right;width: 70px;height: 70px;display: none;position: relative;">
                 <img src="https://ss1.baidu.com/9vo3dSag_xI4khGko9WTAnF6hhy/image/h%3D300/sign=ad628627aacc7cd9e52d32d909032104/32fa828ba61ea8d3fcd2e9ce9e0a304e241f5803.jpg"
                     alt="" id="imgs" style="width: 70px;height: 70px;border-radius: 50%;" />
-                <div id="div"
-                    style="width: 130px;height: 110px;background: #aaa;text-align: center;line-height: 30px;display: none;margin-left: -20px;">
+                <div id="div" style="width: 130px;height: 110px;background: #aaa;text-align: center;line-height: 30px;display: none;margin-left: -20px;position: absolute;left: 0;bottom: -110px;z-index: 10;">
                     <p style="border-bottom: 1px dotted #fff;">
                         <a href="booklist.html" style="text-decoration: none;color: #fff;">书架</a>
                     </p>
@@ -186,6 +185,7 @@
                 transform: 'translateX(0)',
             })
         })
+        // 点击返回阅读，章节列表退出
         $('.zjback').on('click', function () {
             $('.zj_list').css({
                 transition: '.3s',
@@ -203,6 +203,16 @@
             log.style.display = 'none';
             myimg.style.display = 'block';
         }
+        // 点击注册确定
+        $('#btn_up').on('click',function(){
+            console.log(123);
+            $('#logup').modal('toggle');
+        })
+        // 点击登录确定
+        $('#btn_in').on('click',function(){
+            console.log(123);
+            $('#login').modal('toggle');
+        })
         //退出登录
         btn_out.onclick = function () {
             localStorage.clear();
