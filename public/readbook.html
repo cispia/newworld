@@ -179,6 +179,14 @@
 
 
     <script>
+    	//获取登录状态
+	if (localStorage.user) {
+		// console.log(123);
+		var json = JSON.parse(localStorage.user);
+		$("#imgs").attr("src", json.img);
+		log.style.display = 'none';
+		myimg.style.display = 'block';
+	}
         // 点击章节，滑出章节列表
         $('.zj').on('click', function () {
             $('.zj_list').css({

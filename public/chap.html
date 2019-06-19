@@ -307,11 +307,20 @@
 		</div>
 		<!--结束-->
     <script>
+    	
         var editor = new Simditor({
           	textarea: $('#editor')
           	//optional options
         });
     
+		///获取登录状态
+	if (localStorage.user) {
+		// console.log(123);
+		var json = JSON.parse(localStorage.user);
+		$("#imgs").attr("src", json.img);
+		log.style.display = 'none';
+		myimg.style.display = 'block';
+	}
         imgs.onclick=function(){
 			$("#div").fadeIn(1000);
 		}
