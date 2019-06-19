@@ -1,54 +1,357 @@
 <!DOCTYPE html>
 <html lang="en">
-    <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <meta http-equiv="X-UA-Compatible" content="ie=edge">
-        <title>首页</title>
-        <script src="./javascripts/jquery.min.js"></script>
-        <!-- 最新版本的 Bootstrap 核心 CSS 文件 -->
-        <link rel="stylesheet"
-            href="https://cdn.jsdelivr.net/npm/bootstrap@3.3.7/dist/css/bootstrap.min.css"
-            integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u"
-            crossorigin="anonymous">
-        <!-- 最新的 Bootstrap 核心 JavaScript 文件 -->
-        <script
-            src="https://cdn.jsdelivr.net/npm/bootstrap@3.3.7/dist/js/bootstrap.min.js"
-            integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"
-            crossorigin="anonymous"></script>
-            <style>
-                *{margin: 0;padding: 0;}
-            </style>
-    </head>
-    <body>
-        
-        <!-- 头部 -->
-        <div class="head" style="background:#5555554d;width: 100%;height: 70px;">
-            <div class="container">
-                <div class="logo" style="width: 70px;height: 70px;background:orange;display: inline-block;">
-                    <img src="" alt="" style="width: 100%;height: 100%;">
-                </div>
-                <!-- 登录注册 -->
-                <div class="login" style="float: right;width: 100px;height: 70px;background: orangered;line-height: 70px;text-align: center;">
-                    <span style="font-size: 20px;" class="login">登录</span> |
-                    <span style="font-size: 20px;" class="logup">注册</span>
-                </div>
-            </div>
-        </div>
-        <!-- 头部结束 -->
-        <!-- 内容 -->
-        <div class="container" style="min-height:500px;border:1px solid red;">
 
-        </div>
-        <!-- 内容结束 -->
-        <!-- 尾部 -->
-        <div class="foot" style="width: 100%;height:100px;background:#333;color: #fff;text-align: center;padding-top: 10px;">
-            <div class="container">
-                <p>海量图书，更高品质阅读体验</p>
-                <p>网络文化经营许可证：粤网文[2017]3018-499号</p>
-                <p>Designed and built with all the love in the world by @mdo and @fat. Maintained by the core team with the help of our contributors.</p>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>个人中心</title>
+    <script src="./javascripts/jquery.min.js"></script>
+    <!-- 最新版本的 Bootstrap 核心 CSS 文件 -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@3.3.7/dist/css/bootstrap.min.css"
+        integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    <!-- 最新的 Bootstrap 核心 JavaScript 文件 -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@3.3.7/dist/js/bootstrap.min.js"
+        integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"
+        crossorigin="anonymous"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            border-style: none;
+            list-style: none;
+        }
+
+        .msg {
+            width: 30%;
+            min-height: 600px;
+            float: left;
+            padding-top: 100px;
+            padding-left: 100px;
+            box-sizing: border-box;
+            background: rgba(234, 227, 178,.6);
+        }
+
+        .msg img {
+            width: 100px;
+            height: auto;
+            margin-bottom: 10px;
+            display: inline-block;
+        }
+
+        .my p {
+            width: 70%;
+            height: 30px;
+            line-height: 30px;
+            margin-bottom: 10px;
+        }
+
+        .my label {
+            font-weight: 400;
+        }
+
+        .release {
+            width: 100px;
+            text-align: center;
+            line-height: 30px;
+            height: 30px;
+            border-radius: 3px;
+            border-style: none;
+        }
+
+        .done {
+            width: 70%;
+            display: inline-block;
+            padding: 30px;
+            height: 600px;
+            padding-bottom: 0;
+            overflow: hidden;
+            border-left: 2px solid #ccc;
+        }
+
+        .clearfix:after,
+        .clearfix:before {
+            content: "";
+            display: table;
+        }
+
+        .clearfix:after {
+            clear: both;
+        }
+
+        .donelist li {
+            width: 240px;
+            border: 1px solid #ced;
+            float: left;
+            height: auto;
+            padding: 10px;
+        }
+
+        .donelist li img {
+            width: 100%;
+            padding: 10px;
+            height: auto;
+            margin-bottom: 10px;
+        }
+
+        .donelist li p {
+            width: 100%;
+            height: 30px;
+            font-size: 25px;
+            line-height: 30px;
+            text-align: center;
+        }
+
+        .donelist li button {
+            width: 130px;
+            height: 30px;
+            line-height: 30px;
+            text-align: center;
+            border-radius: 3px;
+            display: block;
+            margin: 0 auto;
+            margin-bottom: 10px;
+        }
+
+        .bookicon {
+            width: 100px;
+            height: 140px;
+            display: table-cell;
+            text-align: center;
+            vertical-align: middle;
+        }
+
+        .bookicon img {
+            width: 100%;
+            height: 100%;
+        }
+        .foot{
+            width:100%;
+            height:150px;
+            background:#333;
+            color:#fff;
+            text-align: center;
+        }
+        .foot .container{
+            height: 100%;
+        }
+        .foot p{
+            height: 40px;
+            font-size: 18px;
+            margin: 0;
+            line-height: 40px;
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- 头部 -->
+		<div class="head" style="background:#5555554d;width: 100%;height: 70px;">
+			<div class="container">
+				<div class="logo" style="width: 70px;height: 70px;display: inline-block;">
+					<img src="http://c-shuqi.11222.cn/assets/logo_7a44de2.png" alt="" style="width: 100%;height: 100%;">
+				</div>
+				<!--登录注册-->
+				<div id="log" style="float: right;width: 100px;height: 70px;line-height: 70px;text-align: center;font-size: 20px;">
+					<span data-toggle="modal" data-target="#login" class="login">登录</span> /
+					<span data-toggle="modal" data-target="#logup" class="logup">注册</span>
+				</div>
+				<!--头像-->
+				<div id="myimg" style="float: right;width: 70px;height: 70px;display: none;">
+					<img src="https://ss1.baidu.com/9vo3dSag_xI4khGko9WTAnF6hhy/image/h%3D300/sign=ad628627aacc7cd9e52d32d909032104/32fa828ba61ea8d3fcd2e9ce9e0a304e241f5803.jpg" alt="" id="imgs" style="width: 70px;height: 70px;border-radius: 50%;" />
+					<div id="div" style="width: 130px;height: 110px;background: #aaa;text-align: center;line-height: 30px;display: none;margin-left: -20px;">
+						<p style="border-bottom: 1px dotted #fff;">
+							<a href="booklist.html" style="text-decoration: none;color: #fff;">书架</a>
+						</p>
+						<p style="border-bottom: 1px dotted #fff;">
+							<a href="mymsg.html" style="text-decoration: none;color: #fff;">个人中心</a>
+						</p>
+						<p style="border-bottom: 1px dotted #fff; color: #fff;" id="btn_out">退出登录</p>
+					</div>
+				</div>
+				
+				<!--头像结束-->
+			</div>
+		</div>
+		<!-- 头部结束 -->
+    <!-- 内容 -->
+    <div class="container"  style="border: 1px solid #000;border-top:0;border-bottom:0;padding: 0; line-height: 0">
+        <!-- <div class="content"> -->
+            <!-- 个人信息 -->
+            <div class="msg">
+                <!-- 头像 -->
+                <img src="http://c-shuqi.11222.cn/assets/logo_7a44de2.png" alt="">
+                <div class="my">
+                    <p>昵称:<span>我是神</span></p>
+                    <p>账号:<span>123131313123</span></p>
+                </div>
+                <button class="release" data-toggle="modal" data-target=".bs-example-modal-lg">我要发布</button>
+
+            </div>
+            <!-- 个人信息完成 -->
+            <!-- 已创建小说 -->
+            <div class="done">
+                <ul class="donelist clearfix">
+                    <li>
+                        <img src="http://pic33.nipic.com/20130910/7219038_100729328122_2.jpg" alt="">
+                        <p>
+                            <十年>
+                        </p>
+                        <button>发布</button>
+                        <button>删除</button>
+                    </li>
+                    <li>
+                            <img src="http://pic33.nipic.com/20130910/7219038_100729328122_2.jpg" alt="">
+                            <p>
+                                <十年>
+                            </p>
+                            <button>发布</button>
+                            <button>删除</button>
+                        </li>
+                        <li>
+                        <img src="http://pic33.nipic.com/20130910/7219038_100729328122_2.jpg" alt="">
+                        <p>
+                            <十年>
+                        </p>
+                        <button>发布</button>
+                        <button>删除</button>
+                    </li>
+                </ul>
+            </div>
+        <!-- </div> -->
+    </div>
+    <!-- 内容结束 -->
+    <!-- 创建小说模态框 -->
+    <div class="modal fade bs-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+                    <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal"
+                                aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                            <h4 class="modal-title" id="myModalLabel">创建</h4>
+                        </div>
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label for="my_img">封面
+                            <input style="display: none;" id="my_img" type="file" class="bookimg">
+                            <div class="bookicon"><img src="http://img4.imgtn.bdimg.com/it/u=1758562306,2241758388&fm=26&gp=0.jpg"
+                                    style="background:red;" alt=""></div>
+                        </label>
+                    </div>
+                    <div class="form-group">
+                        <label for="title">书名</label>
+                        <input type="text" class="form-control" id="title" placeholder="书名">
+                    </div>
+                    <div class="form-group">
+                        <label for="author">作者</label>
+                        <input type="text" class="form-control" id="author" placeholder="作者">
+                    </div>
+                    <div class="form-group">
+                        <label for="briefing">简介</label>
+                        <input type="text" class="form-control" id="briefing" placeholder="简介">
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default reset" data-dismiss="modal">取消</button>
+                    <button type="button" class="btn btn-primary" id="my_btn">确定</button>
+                </div>
             </div>
         </div>
-        <!-- 尾部结束 -->
-    </body>
+    </div>
+
+    <!-- 尾部 -->
+    <div class="foot">
+        <div class="container">
+            <p>海量图书，更高品质阅读体验</p>
+            <p>网络文化经营许可证：粤网文[2017]3018-499号</p>
+            <p>Designed and built with all the love in the world by @mdo
+                and
+                @fat. Maintained by the core team with the help of our
+                contributors.</p>
+        </div>
+    </div>
+    <!-- 尾部结束 -->
+    <!--注册-->
+		<div class="modal fade" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" id="logup">
+			<div class="modal-dialog modal-sm" role="document">
+				<div class="modal-content">
+					<div class="modal-header">
+						<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+						<h4 class="modal-title" id="myModalLabel">注册</h4>
+					</div>
+					<div class="modal-body">
+						<div class="form-group">
+							<label for="img">头像
+								<input style="display:none;" type="file" class="files" id="img">
+								<div id="img"><img class="img" src="" alt=""></div>
+							</label>
+						</div>
+						<div class="form-group">
+							<label for="name">昵称</label>
+							<input type="text" class="form-control" id="name_up" placeholder="昵称">
+						</div>
+						<div class="form-group">
+							<label for="user">账号</label>
+							<input type="text" class="form-control" id="user_up" placeholder="账号">
+						</div>
+						<div class="form-group">
+							<label for="pass">密码</label>
+							<input type="password" class="form-control" id="pass_up" placeholder="密码">
+						</div>
+					</div>
+					<div class="modal-footer">
+						<button type="button" class="btn" id="btn_up">确定</button>
+					</div>
+				</div>
+			</div>
+		</div>
+		<!--结束-->
+		<!--登录-->
+		<div class="modal fade" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" id="login">
+			<div class="modal-dialog modal-sm" role="document">
+				<div class="modal-content">
+					<div class="modal-header">
+						<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+						<h4 class="modal-title" id="myModalLabel">登录</h4>
+					</div>
+					<div class="modal-body">
+
+						<div class="form-group">
+							<label for="user">账号</label>
+							<input type="text" class="form-control" id="user_in" placeholder="账号">
+						</div>
+						<div class="form-group">
+							<label for="pass">密码</label>
+							<input type="password" class="form-control" id="pass_in" placeholder="密码">
+						</div>
+					</div>
+					<div class="modal-footer">
+						<button type="button" class="btn" id="btn_in">确定</button>
+					</div>
+				</div>
+			</div>
+		</div>
+        <!--结束-->
+        <script>
+        imgs.onclick=function(){
+			$("#div").fadeIn(1000);
+		}
+		imgs.ondblclick=function() {
+			$("#div").fadeOut(1000);
+		}
+		login.onclick = function() {
+			console.log(111);
+			log.style.display = 'none';
+			myimg.style.display = 'block';
+		}
+		//退出登录
+		btn_out.onclick=function(){
+			localStorage.clear();
+			myimg.style.display='none';
+			log.style.display='block';
+		}
+        </script>
+</body>
+
 </html>
