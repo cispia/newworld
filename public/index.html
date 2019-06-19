@@ -1,136 +1,129 @@
 <!DOCTYPE html>
 <html lang="en">
 
-<head>
-	<meta charset="UTF-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<meta http-equiv="X-UA-Compatible" content="ie=edge">
-	<title>首页</title>
-	<script src="./javascripts/jquery.min.js"></script>
-	<!-- 最新版本的 Bootstrap 核心 CSS 文件 -->
-	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@3.3.7/dist/css/bootstrap.min.css"
-		integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
-	<!-- 最新的 Bootstrap 核心 JavaScript 文件 -->
-	<script src="https://cdn.jsdelivr.net/npm/bootstrap@3.3.7/dist/js/bootstrap.min.js"
-		integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"
-		crossorigin="anonymous"></script>
-	<style>
-		* {
-			margin: 0;
-			padding: 0;
-		}
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<meta http-equiv="X-UA-Compatible" content="ie=edge">
+		<title>首页</title>
+		<script src="javascripts/jquery.min.js"></script>
+		<!-- 最新版本的 Bootstrap 核心 CSS 文件 -->
+		<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@3.3.7/dist/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+		<!-- 最新的 Bootstrap 核心 JavaScript 文件 -->
+		<script src="https://cdn.jsdelivr.net/npm/bootstrap@3.3.7/dist/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+		<style>
+			* {
+				margin: 0;
+				padding: 0;
+			}
+			
+			#img {
+				width: 80px;
+				height: 80px;
+				background: #ccc;
+				border-radius: 50%;
+			}
+			
+			#search {
+				margin: 10px 0 0 25%;
+			}
+			
+			#text {
+				width: 50%;
+				margin-right: -5px;
+			}
+			
+			#btn_search {
+				padding: 0 6px;
+			}
+			
+			#tuijian {
+				width: 50%;
+				margin: 10px auto;
+				line-height: 30px;
+			}
+			
+			#tuijian span {
+				margin-right: 10px;
+			}
+			
+			#list {
+				width: 100%;
+				background: red;
+			}
+			
+			#ul li {
+				width: 27%;
+				height: 400px;
+				float: left;
+				list-style: none;
+				background: #ccc;
+				margin: 3%;
+			}
+			
+			#ul li img {
+				width: 80%;
+				margin: 5% 10% 5% 10%;
+				height: 300px;
+			}
+			
+			#ul li p {
+				margin: 0 0 0 10%;
+				line-height: 30px;
+				font-size: 20px;
+			}
+			
+			#ul li span {
+				margin: 0 0 0 10%;
+				font-size: 18px;
+			}
+			
+			#booklist {
+				min-height: 600px;
+				border: 1px solid #ccc;
+				display: none;
+			}
+			
+			#uls li {
+				height: 220px;
+				list-style: none;
+				border-bottom: 1px solid #ccc;
+			}
+			
+			#uls li img {
+				width: 130px;
+				height: 200px;
+				border: 1px solid #ccc;
+				margin: 10px 20px 10px 20px;
+				float: left;
+			}
+			
+			#cover-book-title {
+				width: 80%;
+				margin-left: 20%;
+				display: block;
+				padding-top: 10px;
+				font-size: 20px;
+			}
+			
+			#author {
+				width: 80%;
+				margin: 20px 0 0 20%;
+				display: block;
+				color: #ccc;
+				font-size: 18px;
+			}
+			
+			#jianjie {
+				margin: 20px 0 0 20%;
+				width: 80%;
+			}
+			#img { width: 80px; height: 80px; background: #ccc; border-radius: 50%; }
+		</style>
+	</head>
 
-		#img {
-			width: 80px;
-			height: 80px;
-			background: #ccc;
-			border-radius: 50%;
-		}
+	
 
-		#img img {
-			width: 80px;
-			height: 80px;
-			border-radius: 50%;
-		}
-
-		#search {
-			margin: 10px 0 0 25%;
-		}
-
-		#text {
-			width: 50%;
-			margin-right: -5px;
-		}
-
-		#btn_search {
-			padding: 0 6px;
-		}
-
-		#tuijian {
-			width: 50%;
-			margin: 10px auto;
-			line-height: 30px;
-		}
-
-		#tuijian span {
-			margin-right: 10px;
-		}
-
-		#list {
-			width: 100%;
-			background: red;
-		}
-
-		#ul li {
-			width: 27%;
-			height: 400px;
-			float: left;
-			list-style: none;
-			background: #ccc;
-			margin: 3%;
-		}
-
-		#ul li img {
-			width: 80%;
-			margin: 5% 10% 5% 10%;
-			height: 300px;
-		}
-
-		#ul li p {
-			margin: 0 0 0 10%;
-			line-height: 30px;
-			font-size: 20px;
-		}
-
-		#ul li span {
-			margin: 0 0 0 10%;
-			font-size: 18px;
-		}
-
-		#booklist {
-			min-height: 600px;
-			border: 1px solid #ccc;
-			display: none;
-		}
-
-		#uls li {
-			height: 220px;
-			list-style: none;
-			border-bottom: 1px solid #ccc;
-		}
-
-		#uls li img {
-			width: 130px;
-			height: 200px;
-			border: 1px solid #ccc;
-			margin: 10px 20px 10px 20px;
-			float: left;
-		}
-
-		#cover-book-title {
-			width: 80%;
-			margin-left: 20%;
-			display: block;
-			padding-top: 10px;
-			font-size: 20px;
-		}
-
-		#author {
-			width: 80%;
-			margin: 20px 0 0 20%;
-			display: block;
-			color: #ccc;
-			font-size: 18px;
-		}
-
-		#jianjie {
-			margin: 20px 0 0 20%;
-			width: 80%;
-		}
-	</style>
-</head>
-
-<body>
 	<!-- 头部 -->
 	<div class="head" style="background:#5555554d;width: 100%;height: 70px;">
 		<div class="container">
@@ -138,17 +131,14 @@
 				<img src="http://c-shuqi.11222.cn/assets/logo_7a44de2.png" alt="" style="width: 100%;height: 100%;">
 			</div>
 			<!--登录注册-->
-			<div id="log"
-				style="float: right;width: 100px;height: 70px;line-height: 70px;text-align: center;font-size: 20px;">
+			<div id="log" style="float: right;width: 100px;height: 70px;line-height: 70px;text-align: center;font-size: 20px;">
 				<span data-toggle="modal" data-target="#login" class="login">登录</span> /
-				<span data-toggle="modal" data-target="#logup">注册</span>
+				<span data-toggle="modal" data-target="#logup" class="logup">注册</span>
 			</div>
 			<!--头像-->
-			<div id="myimg" style="float: right;width: 70px;height: 70px;display: none;">
-				<img src="https://ss1.baidu.com/9vo3dSag_xI4khGko9WTAnF6hhy/image/h%3D300/sign=ad628627aacc7cd9e52d32d909032104/32fa828ba61ea8d3fcd2e9ce9e0a304e241f5803.jpg"
-					alt="" id="imgs" style="width: 70px;height: 70px;border-radius: 50%;" />
-				<div id="div"
-					style="width: 130px;height: 110px;background: #aaa;text-align: center;line-height: 30px;display: none;margin-left: -20px;">
+			<div id="myimg" style="float: right;width: 70px;height: 70px;display: none;position: relative;">
+				<img src="https://ss1.baidu.com/9vo3dSag_xI4khGko9WTAnF6hhy/image/h%3D300/sign=ad628627aacc7cd9e52d32d909032104/32fa828ba61ea8d3fcd2e9ce9e0a304e241f5803.jpg" alt="" id="imgs" style="width: 70px;height: 70px;border-radius: 50%;" />
+				<div id="div" style="width: 130px;height: 110px;background: #aaa;text-align: center;line-height: 30px;display: none;margin-left: -20px;position: absolute;left: 0;bottom:-110px;z-index: 10;">
 					<p style="border-bottom: 1px dotted #fff;">
 						<a href="booklist.html" style="text-decoration: none;color: #fff;">书架</a>
 					</p>
@@ -182,15 +172,7 @@
 		<!--热搜小说-->
 		<div id="list">
 			<ul id="ul">
-				<li>
-					<a href="booklist.html" style="text-decoration: none; color: #fff;">
-						<img src="http://img2.imgtn.bdimg.com/it/u=270262348,3168648358&fm=26&gp=0.jpg" alt="" />
-						<p>你好</p>
-						<span>esfioajf </span>
-					</a>
-				</li>
-				<li></li>
-				<li></li>
+				
 			</ul>
 		</div>
 		<!--结束-->
@@ -200,11 +182,8 @@
 	<!--搜索列表-->
 	<div class="container" id="booklist">
 		<!--返回-->
-		<div
-			style="text-align: center;margin-top: 10px;border-bottom: 1px solid #ccc;font-size: 20px;line-height: 30px;">
-			<button id="back"
-				style="float: left;background: #ccc;border: saddlebrown;padding: 0 10px;margin-top: -5px;border-radius: 10px;">back</button>
-			搜索列表
+		<div style="text-align: center;margin-top: 10px;border-bottom: 1px solid #ccc;font-size: 20px;line-height: 30px;">
+			<button id="back" style="float: left;background: #ccc;border: saddlebrown;padding: 0 10px;margin-top: -5px;border-radius: 10px;">back</button> 搜索列表
 		</div>
 		<!--返回结束-->
 
@@ -225,13 +204,11 @@
 	<!--搜索列表结束-->
 
 	<!-- 尾部 -->
-	<div class="foot"
-		style="width: 100%;height:100px;background:#333;color: #fff;text-align: center;padding-top: 10px;">
+	<div class="foot" style="width: 100%;height:100px;background:#333;color: #fff;text-align: center;padding-top: 10px;">
 		<div class="container">
 			<p>海量图书，更高品质阅读体验</p>
 			<p>网络文化经营许可证：粤网文[2017]3018-499号</p>
-			<p>Designed and built with all the love in the world by @mdo and @fat. Maintained by the core team with the
-				help of our contributors.</p>
+			<p>Designed and built with all the love in the world by @mdo and @fat. Maintained by the core team with the help of our contributors.</p>
 		</div>
 	</div>
 	<!-- 尾部结束 -->
@@ -299,122 +276,143 @@
 		</div>
 	</div>
 	<!--结束-->
-</body>
+	</body>
 
-<!---->
-<script src="javascripts/jquery.min.js"></script>
-<script>
-	//获取登录状态
-	if (localStorage.user) {
-		// console.log(123);
-		var json = JSON.parse(localStorage.user);
-		$("#imgs").attr("src", json.img);
-		log.style.display = 'none';
-		myimg.style.display = 'block';
-	}
-	var href = 'http://192.168.43.239:8000';
-	//头像
-	var imgurl = '';
-	$(".files").on("change", function () {
-		var files = $(this)[0].files[0];
-		var d = new FormData;
-		d.append("tx", files);
+	<!---->
+	<script src="javascripts/jquery.min.js"></script>
+	<script>
+		var href = 'http://192.168.43.239:8000';
 		$.ajax({
-			url: href + "/cover/cover",
-			type: "post",
-			data: d,
-			contentType: false,
-			processData: false,
-			success(data) {
-				imgurl = href + data;
-				console.log(imgurl);
-				$(".img").attr("src", imgurl);
+			url:href+'/resou',
+			type:'post',
+			success(data){
+				// console.log(data);
+				data = data.splice(3,3);
+				$.each(data,function(i,o){
+					var li = $(`
+					<li>
+					<a href="details.html" style="text-decoration: none; color: #fff;">
+						<img src="${o.bookimg}" alt="" />
+						<p>${o.name}</p>
+						<span>${o.author}</span>
+					</a>
+				</li>`)
+					$('#ul').append(li);
+					$(li).on('click',function(){
+						localStorage.bookmsg=JSON.stringify(data[$(this).index()]);
+					})
+				})
 			}
 		})
-	})
-	// 中文检测
-	function isChineseChar(str) {
-		var reg = /[\u4E00-\u9FA5\uF900-\uFA2D]/;
-		return reg.test(str);
-	}
-	// 登录
-	$("#btn_in").on("click", () => {
-		if ($("#user_in").val() == "" || $("#pass_in").val() == "") {
-			alert("密码或账号不能为空");
-			return;
-		} else if (isChineseChar($("#user_in").val()) || isChineseChar($("#pass_in").val())) {
-			alert("密码和账号不能为中文");
-			return;
-		} else {
+		//获取登录状态
+		if(localStorage.user) {
+			// console.log(123);
+			var json = JSON.parse(localStorage.user);
+			$("#imgs").attr("src", json.img);
+			log.style.display = 'none';
+			myimg.style.display = 'block';
+		}
+		//头像
+		var imgurl = '';
+		$(".files").on("change", function() {
+			var files = $(this)[0].files[0];
+			var d = new FormData;
+			d.append("tx", files);
 			$.ajax({
-				url: href + "/in",
+				url: href + "/cover/cover",
 				type: "post",
-				data: {
-					user: $("#user_in").val(),
-					pass: $("#pass_in").val(),
-				},
+				data: d,
+				contentType: false,
+				processData: false,
 				success(data) {
-					if (data.length == 0) {
-						alert('账号或密码错误');
-						return;
+					imgurl = href + data;
+					console.log(imgurl);
+					$(".img").attr("src", imgurl);
+				}
+			})
+		})
+		// 中文检测
+		function isChineseChar(str) {
+			var reg = /[\u4E00-\u9FA5\uF900-\uFA2D]/;
+			return reg.test(str);
+		}
+		// 登录
+		$("#btn_in").on("click", () => {
+			if($("#user_in").val() == "" || $("#pass_in").val() == "") {
+				alert("密码或账号不能为空");
+				return;
+			} else if(isChineseChar($("#user_in").val()) || isChineseChar($("#pass_in").val())) {
+				alert("密码和账号不能为中文");
+				return;
+			} else {
+				$.ajax({
+					url: href + "/in",
+					type: "post",
+					data: {
+						user: $("#user_in").val(),
+						pass: $("#pass_in").val(),
+					},
+					success(data) {
+						if(data.length == 0) {
+							alert('账号或密码错误');
+							return;
+						}
+						log.style.display = 'none';
+						myimg.style.display = 'block';
+						localStorage.user = JSON.stringify(data);
+						alert(data.tip);
+						$("#imgs").attr("src", data.img);
 					}
-					log.style.display = 'none';
-					myimg.style.display = 'block';
-					localStorage.user = JSON.stringify(data);
-					alert(data.tip);
-					$("#imgs").attr("src", data.img);
-				}
-			})
-		}
-	})
-	// 注册
-	$("#btn_up").on("click", () => {
-		if ($("#user_up").val() == "" || $("#pass_up").val() == "" || $("#name_up").val() == "" || imgurl == "") {
-			alert("密码或账号不能为空");
-			return;
-		} else if (isChineseChar($("#user_up").val()) || isChineseChar($("#pass_up").val())) {
-			alert("密码和账号不能为中文");
-			return;
-		} else {
-			$.ajax({
-				url: href + "/up",
-				type: "post",
-				data: {
-					name: $("#name_up").val(),
-					user: $("#user_up").val(),
-					pass: $("#pass_up").val(),
-					userimg: imgurl
-				},
-				success(data) {
-					alert(data);
-				}
-			})
-		}
-	})
+				})
+			}
+		})
+		// 注册
+		$("#btn_up").on("click", () => {
+			if($("#user_up").val() == "" || $("#pass_up").val() == "" || $("#name_up").val() == "" || imgurl == "") {
+				alert("密码或账号不能为空");
+				return;
+			} else if(isChineseChar($("#user_up").val()) || isChineseChar($("#pass_up").val())) {
+				alert("密码和账号不能为中文");
+				return;
+			} else {
+				$.ajax({
+					url: href + "/up",
+					type: "post",
+					data: {
+						name: $("#name_up").val(),
+						user: $("#user_up").val(),
+						pass: $("#pass_up").val(),
+						userimg: imgurl
+					},
+					success(data) {
+						alert(data);
+					}
+				})
+			}
+		})
 
-
-	imgs.onclick = function () {
-		$("#div").fadeIn(1000);
-	}
-	imgs.ondblclick = function () {
-		$("#div").fadeOut(1000);
-	}
-	//退出登录
-	btn_out.onclick = function () {
-		localStorage.clear();
-		myimg.style.display = 'none';
-		log.style.display = 'block';
-	}
-	//搜索
-	btn_search.onclick = function () {
-		con.style.display = 'none';
-		booklist.style.display = 'block';
-	}
-	//返回
-	back.onclick = function () {
-		con.style.display = 'block';
-		booklist.style.display = 'none';
-	}
-</script>
+		imgs.onclick = function() {
+			$("#div").fadeIn(1000);
+		}
+		imgs.ondblclick = function() {
+			$("#div").fadeOut(1000);
+		}
+		//退出登录
+		btn_out.onclick = function() {
+			localStorage.clear();
+			myimg.style.display = 'none';
+			log.style.display = 'block';
+		}
+		//搜索
+		btn_search.onclick = function() {
+			con.style.display = 'none';
+			booklist.style.display = 'block';
+		}
+		//返回
+		back.onclick = function() {
+			con.style.display = 'block';
+			booklist.style.display = 'none';
+		}
+	</script>
 
 </html>
