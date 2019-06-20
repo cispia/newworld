@@ -19,6 +19,7 @@
 			margin: 0;
 			padding: 0;
 			list-style: none;
+			user-select: none;
 		}
 
 		.booklist,
@@ -68,10 +69,10 @@
 <body>
 
 	<!-- 头部 -->
-	<div class="head" style="background:#5555554d;width: 100%;height: 70px;">
+	<div class="head" style="background:#dcdcdc4d;width: 100%;height: 70px;">
 		<div class="container">
-			<div class="logo" style="width: 70px;height: 70px;display: inline-block;">
-				<img src="http://c-shuqi.11222.cn/assets/logo_7a44de2.png" alt="" style="width: 100%;height: 100%;">
+			<div class="logo" style="width: 100px;height: 70px;display: inline-block;">
+				<img src="http://www.cnlogo8.com/d/file/2017-04-13/5a97b5fd70fa3a059e2ac9cc4a891989.png" alt="返回首页" style="width: 100%;height: 100%;">
 			</div>
 			<!--登录注册-->
 			<div id="log"
@@ -213,11 +214,14 @@
 				},
 				success(data) {
 					$('.list_ul').empty();
+					if(data.length==0){
+						$('.list_ul').text('您还没有收藏');
+					}
 					$.each(data, function (i, o) {
 						var li = $(`
 						<li style="position: relative;">
-							<a href="details.html">
 								<span class="glyphicon glyphicon-remove-sign b_remove" style="position: absolute;top:-5px;right:-5px;font-size:20px;color:red;display: none;"></span>
+								<a href="details.html" style="text-decoration: none">
 						<div class="bookimg">
 							<img src="${o.bookimg}" alt="">
 						</div>
@@ -251,32 +255,15 @@
 				}
 			})
 		}
-		var btrue = true;
 		$('.remove').on('click', function () {
-			if (btrue) {
-				$('.b_remove').css({
-					display: 'block',
-				})
-				btrue = false;
-			} else {
+			if ($('.b_remove').css("display")=="block") {
 				$('.b_remove').css({
 					display: 'none',
 				})
-				btrue = true;
-			}
-		})
-		var rtrue = true;
-		$('.r_history').on('click', function () {
-			if (rtrue) {
-				$('.h_r').css({
+			} else {
+				$('.b_remove').css({
 					display: 'block',
 				})
-				rtrue = false;
-			} else {
-				$('.h_r').css({
-					display: 'none',
-				})
-				rtrue = true;
 			}
 		})
 		//头像
@@ -369,6 +356,9 @@
 			myimg.style.display = 'none';
 			log.style.display = 'block';
 		}
+		$('.logo').on('click',function(){
+			location.href='index.html';
+		})
 	</script>
 </body>
 

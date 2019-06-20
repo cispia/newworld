@@ -19,6 +19,7 @@
             margin: 0;
             padding: 0;
             list-style-type: none;
+            user-select: none;
         }
 
         .L_cover {
@@ -89,16 +90,35 @@
             float: left;
             margin-right: 20px;
         }
+
+        .top {
+            height: 50px;
+            text-align: center;
+            line-height: 50px;
+            font-size: 22px;
+            border-bottom: 1px solid;
+        }
+
+        .back {
+            width: 100px;
+            height: 50px;
+            float: left;
+            outline: none;
+            border-style: none;
+            background: none;
+            font-size: 45px;
+        }
     </style>
 </head>
 
 <body>
 
     <!-- 头部 -->
-    <div class="head" style="background:#5555554d;width: 100%;height: 70px;">
+    <div class="head" style="background:#dcdcdc4d;width: 100%;height: 70px;">
         <div class="container">
-            <div class="logo" style="width: 70px;height: 70px;display: inline-block;">
-                <img src="http://c-shuqi.11222.cn/assets/logo_7a44de2.png" alt="" style="width: 100%;height: 100%;">
+            <div class="logo" style="width: 100px;height: 70px;display: inline-block;">
+                <img src="http://www.cnlogo8.com/d/file/2017-04-13/5a97b5fd70fa3a059e2ac9cc4a891989.png" alt="返回首页"
+                    style="width: 100%;height: 100%;">
             </div>
             <!--登录注册-->
             <div id="log"
@@ -128,6 +148,7 @@
     <!-- 头部结束 -->
     <!-- 内容 -->
     <div class="container" style="min-height:500px;border:1px solid red;">
+        <div class="top"><button class="back glyphicon glyphicon-arrow-left"></button>个人中心</div>
         <!-- 封面 -->
         <div class='L_cover' style="overflow:hidden">
             <div class='L_cover-left'>
@@ -241,20 +262,38 @@
 <script>
     // 收藏
     $('#L_collect').on('click', function () {
-        $.ajax({
-            url: href + '/collect',
-            type: 'post',
-            data: {
-                name: JSON.parse(localStorage.bookmsg).name,
-                auth: JSON.parse(localStorage.bookmsg).author,
-                bookimg: JSON.parse(localStorage.bookmsg).bookimg,
-                logid: JSON.parse(localStorage.user).uid,
-                bookid: JSON.parse(localStorage.bookmsg).uid
-            },
-            success(data) {
-                alert(data)
-            }
-        })
+       
+        if (!localStorage.user) {
+            // console.log(localStorage.user);
+            alert('请先登录');
+            return;
+        } else {
+            $.ajax({
+                url: href + '/collect',
+                type: 'post',
+                data: {
+                    name: JSON.parse(localStorage.bookmsg).name,
+                    auth: JSON.parse(localStorage.bookmsg).author,
+                    bookimg: JSON.parse(localStorage.bookmsg).bookimg,
+                    logid: JSON.parse(localStorage.user).uid,
+                    bookid: JSON.parse(localStorage.bookmsg).uid
+                },
+                success(data) {
+
+                    if (data == '此书已收藏') {
+                        $('#L_collect').text('已收藏');
+                        $('#L_collect').attr('disabled', 'true');
+                        alert(data);
+                    } else {
+                        $('#L_collect').text('已收藏');
+                        $('#L_collect').attr('disabled', 'true');
+                        alert(data);
+                    }
+
+                }
+            })
+        }
+
     })
     //获取登录状态
     if (localStorage.user) {
@@ -353,6 +392,7 @@
 							</li>`)
                     $('.uls').append(li)
                 })
+                $('#text').val('');
             }
         })
     })
@@ -442,10 +482,18 @@
     }
     //退出登录
     btn_out.onclick = function () {
-        localStorage.clear();
+        localStorage.user='';
         myimg.style.display = 'none';
         log.style.display = 'block';
     }
+    //返回首页
+    $('.logo').on('click', function () {
+        location.href = 'index.html';
+    })
+    //返回
+    $('.back').on('click', function () {
+        location.href = 'index.html';
+    })
 </script>
 
 </html>

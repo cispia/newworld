@@ -20,6 +20,7 @@
 			padding: 0;
 			border-style: none;
 			list-style: none;
+			user-select: none;
 		}
 
 		.msg {
@@ -62,7 +63,7 @@
 		.done {
 			width: 70%;
 			display: inline-block;
-			padding: 30px;
+			padding: 60px 30px;
 			height: 600px;
 			padding-bottom: 0;
 			overflow: hidden;
@@ -88,7 +89,7 @@
 			width: 240px;
 			border: 1px solid #ced;
 			float: left;
-			height: 300px;
+			height: 450px;
 			padding: 10px;
 		}
 
@@ -122,6 +123,7 @@
 			width: 100px;
 			height: 140px;
 			display: table-cell;
+			border: 1px solid #ccc;
 			text-align: center;
 			vertical-align: middle;
 		}
@@ -149,16 +151,32 @@
 			margin: 0;
 			line-height: 40px;
 		}
+		.top{
+			height: 50px;
+			text-align: center;
+			line-height: 50px;
+			font-size: 22px;
+			border-bottom: 1px solid;
+		}
+		.back{
+			width: 100px;
+			height: 50px;
+			float: left;
+			outline: none;
+			border-style: none;
+			background: none;
+   			font-size: 45px;
+		}
 	</style>
 </head>
 
 <body>
 
 	<!-- 头部 -->
-	<div class="head" style="background:#5555554d;width: 100%;height: 70px;">
+	<div class="head" style="background:#dcdcdc4d;width: 100%;height: 70px;">
 		<div class="container">
-			<div class="logo" style="width: 70px;height: 70px;display: inline-block;">
-				<img src="http://c-shuqi.11222.cn/assets/logo_7a44de2.png" alt="" style="width: 100%;height: 100%;">
+			<div class="logo" style="width: 100px;height: 70px;display: inline-block;">
+				<img src="http://www.cnlogo8.com/d/file/2017-04-13/5a97b5fd70fa3a059e2ac9cc4a891989.png" alt="返回首页" style="width: 100%;height: 100%;">
 			</div>
 			<!--登录注册-->
 			<div id="log"
@@ -190,6 +208,7 @@
 	<div class="container" style="border: 1px solid #000;border-top:0;border-bottom:0;padding: 0; line-height: 0">
 		<!-- <div class="content"> -->
 		<!-- 个人信息 -->
+		<div class="top"><button class="back glyphicon glyphicon-arrow-left"></button>个人中心</div>
 		<div class="msg">
 			<!-- 头像 -->
 			<img class="tx" src="" alt="">
@@ -395,15 +414,11 @@
 					alert('创建成功')
 					$('.donelist').empty();
 					blist(data);
-					$('.donelist').css({
-						width: parseFloat($(li).css('width')) * $('.donelist li').length + 'px'
-					})
 				}
 			})
 		})
 		//小说列表
 		function blist(data) {
-			console.log(data);
 			if (data instanceof Array) {
 				$.each(data, function (i, o) {
 					var li = $(`<li>
@@ -414,13 +429,27 @@
 							</li>
 								`)
 					$('.donelist').append(li)
+					// console.log($(".donelist li").eq(0).css("width"))
+					$(".donelist").css("width",$(".donelist li").length*parseFloat($(".donelist li").eq(0).css("width"))+'px')
 					$(li).children("#fabu").on('click', function () {
 						localStorage.bookmsg = JSON.stringify(data[$(this).parent().index()]);
 						location.href = "chap.html";
 					})
-					// $(li).children("#del").on('click',function(){
-					// 	// console.log($(this).parent().index())
-					// })
+					$(li).children("#del").on('click',function(){
+						// console.log(data[$(this).parent().index()]);
+						$.ajax({
+							type:'get',
+							url:href+'/delbook',
+							data:{
+								uid:data[$(this).parent().index()].uid
+							},
+							success(data){
+								// console.log(data);
+								$('.donelist').empty();
+								blist(data);
+							}
+						})
+					})
 				})
 			} else {
 				alert(data);
@@ -521,6 +550,14 @@
 			myimg.style.display = 'none';
 			log.style.display = 'block';
 		}
+		//返回首页
+		$('.logo').on('click',function(){
+			location.href='index.html';
+		})
+		//返回
+		$('.back').on('click',function(){
+			location.href='index.html';
+		})
 	</script>
 </body>
 

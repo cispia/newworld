@@ -1,13 +1,27 @@
 var express = require('express');
 var router = express.Router();
 var pool = require("./pool");
+// 搜索小说
+router.post('/seatch', function (req, res) {
+    var json = req.body.hotkey;
+    console.log(json);
+    pool.conn({
+        sql: 'select * from createbook where name like "%' + json + '%" or author like "%' + json + '%"',
+        success(data) {
+            res.send(data);
+        },
+        error(err) {
+            res.send(err);
+        }
+    })
+});
 // 刷新评论
 router.get('/pload', function (req, res) {
     var json = req.query;
     pool.conn({
-        sql: 'select * from pl where bookid='+json.pl,
+        sql: 'select * from pl where bookid=' + json.pl,
         success(data) {
-                res.send(data);
+            res.send(data);
         },
         error(err) {
             res.send(err);
@@ -76,6 +90,27 @@ router.get('/del', function (req, res) {
         }
     })
 });
+// 删除章节
+router.get('/delbook', function (req, res) {
+    var json = req.query;
+    pool.conn({
+        sql: "select * from chap where uid=" + json.uid,
+        success(data) {
+            pool.conn({
+                sql: "delete from createbook where uid=" + json.uid,
+                success(data) {
+                    res.send("删除成功");
+                },
+                error(err) {
+                    res.send(err);
+                }
+            })
+        },
+        error(err) {
+            res.send(err);
+        }
+    })
+});
 // // 修改个人信息
 // router.post('/updat', function (req, res) {
 //     var json = req.body;
@@ -96,7 +131,7 @@ router.post('/resou', function (req, res) {
     pool.conn({
         sql: 'select * from createbook',
         success(data) {
-                res.send(data);
+            res.send(data);
         },
         error(err) {
             res.send(err);
@@ -106,11 +141,24 @@ router.post('/resou', function (req, res) {
 // 添加收藏
 router.post('/collect', function (req, res) {
     var json = req.body;
+    console.log(json);
     pool.conn({
-        sql: 'insert into collection(name,author,bookimg,loginid,bookid) values(?,?,?,?,?)',
-        arr: [json.name,json.auth,json.bookimg,json.logid,json.bookid],
+        sql: "select * from collection where uid="+json.bookid,
         success(data) {
-                res.send("收藏成功!");
+            if (data.length) {
+                res.send("此书已收藏");
+            } else {
+                pool.conn({
+                    sql: "insert into collection(uid,name,author,bookimg,loginid,bookid) values(?,?,?,?,?,?)",
+                    arr: [json.bookid,json.name, json.auth, json.bookimg, json.logid, json.bookid],
+                    success(data) {
+                        res.send("收藏成功");
+                    },
+                    error(err) {
+                        res.send(err);
+                    }
+                })
+            }
         },
         error(err) {
             res.send(err);
@@ -124,7 +172,7 @@ router.get('/booklist', function (req, res) {
         sql: 'select * from collection where loginid=?',
         arr: [json.logid],
         success(data) {
-                res.send(data);
+            res.send(data);
         },
         error(err) {
             res.send(err);
@@ -138,7 +186,7 @@ router.get('/delcol', function (req, res) {
         sql: 'delete from collection where uid=?',
         arr: [json.logid],
         success(data) {
-                res.send("删除成功!");
+            res.send("删除成功!");
         },
         error(err) {
             res.send(err);
@@ -207,24 +255,7 @@ router.get('/loguid', function (req, res) {
 //         }
 //     })
 // });
-// // 搜索小说
-// router.post('/seatch', function (req, res) {
-//     var json = req.body.hotkey;
-//     pool.conn({
-//         sql: 'select * from createbook where name like "%' + json + '%"',
-//         success(data) {
-//             if (data.length) {
-//                 var result = data;
-//                 res.send(result);
-//             } else {
-//                 res.send(data);
-//             }
-//         },
-//         error(err) {
-//             res.send(err);
-//         }
-//     })
-// });
+
 // 章节列表
 router.get('/chaplist', function (req, res) {
     var json = req.query;
@@ -263,7 +294,7 @@ router.get('/read', function (req, res) {
         }
     })
 });
-// 章节列表
+// 详情章节列表
 router.post('/bookid', function (req, res) {
     var json = req.body;
     // console.log(json)

@@ -24,6 +24,7 @@
 			margin: 0;
 			padding: 0;
 			list-style-type: none;
+			user-select: none;
 		}
 
 		.L_cover {
@@ -122,27 +123,46 @@
 			text-align: center;
 		}
 
-		.L_off {
+		.L_off,.L-off {
 			width: 80px;
 			height: 40px;
 			float: right;
 			margin-right: 15px;
 		}
 
-		.L_on {
+		.L_on ,.L-on{
 			width: 80px;
 			height: 40px;
 			float: right;
 			margin-right: 15px;
 		}
 
-		.L_img {
+		.L_img ,.L-img{
 			position: absolute;
 			right: 10px;
 			top: 5px;
-			width: 80px;
+			width: 110px;
 			height: 150px;
 			background: chartreuse;
+		}
+		.L-title{
+			height: 130px;
+		}
+		.top{
+			height: 50px;
+			text-align: center;
+			line-height: 50px;
+			font-size: 22px;
+			border-bottom: 1px solid;
+		}
+		.back{
+			width: 100px;
+			height: 50px;
+			float: left;
+			outline: none;
+			border-style: none;
+			background: none;
+   			font-size: 45px;
 		}
 	</style>
 </head>
@@ -150,10 +170,10 @@
 <body>
 
 	<!-- 头部 -->
-	<div class="head" style="background:#5555554d;width: 100%;height: 70px;">
+	<div class="head" style="background:#dcdcdc4d;width: 100%;height: 70px;">
 		<div class="container">
-			<div class="logo" style="width: 70px;height: 70px;display: inline-block;">
-				<img src="http://c-shuqi.11222.cn/assets/logo_7a44de2.png" alt="" style="width: 100%;height: 100%;">
+			<div class="logo" style="width: 100px;height: 70px;display: inline-block;">
+				<img src="http://www.cnlogo8.com/d/file/2017-04-13/5a97b5fd70fa3a059e2ac9cc4a891989.png" alt="返回首页" style="width: 100%;height: 100%;">
 			</div>
 			<!--登录注册-->
 			<div id="log"
@@ -182,7 +202,8 @@
 	</div>
 	<!-- 头部结束 -->
 	<!-- 内容 -->
-	<div class="container" style="min-height:500px;border:1px solid red;">
+	<div class="container" style="min-height:500px;border:1px solid #ccc;padding:0;">
+		<div class="top"><button class="back glyphicon glyphicon-arrow-left"></button>章节更新</div>
 		<!-- 封面 -->
 		<div class='L_cover' style="overflow:hidden">
 			<div class='L_cover-left'>
@@ -233,12 +254,12 @@
 		<div class="modal-dialog modal-lg" role="document">
 			<div class="modal-content">
 				<!-- 标题 -->
-				<div class="L_head" style="text-align:center;font-size:20px;">章节内容</div>
+				<div class="L_head" style="text-align:center;font-size:20px;line-height: 30px;">章节内容</div>
 				<!-- 小说名字 -->
 				<div class="L-title">
 					<div class="L_maintitle">
-						<div class="L_bookname" style="font-size:18px;">小说名字：<span class='bookname'></span></div>
-						<div class="L_itemname" style="font-size:20px;">
+						<div class="L_bookname" style="font-size:18px;margin-bottom: 20px;padding-left: 30px;">小说名字：<span class='bookname'></span></div>
+						<div class="L_itemname" style="font-size:20px;padding-left: 30px;">
 							章节：
 							<input id="L_name" type="text" placeholder="名字">
 						</div>
@@ -254,7 +275,7 @@
 				<div class="L_foot" style="height:60px;">
 					<div class="L_button">
 						<!-- 修改按钮 -->
-						<button type="button" class="btn btn-default L_on" data-dismiss="modal">修改</button>
+						<button type="button" class="btn btn-default L_on" data-dismiss="modal">发布</button>
 						<!-- 取消按钮 -->
 						<button type="button" class="btn btn-default L_off" data-dismiss="modal">取消</button>
 					</div>
@@ -268,12 +289,12 @@
 		<div class="modal-dialog modal-lg" role="document">
 			<div class="modal-content">
 				<!-- 标题 -->
-				<div class="L-head" style="text-align:center;font-size:20px;">章节内容</div>
+				<div class="L-head" style="text-align:center;font-size:20px;line-height: 30px;">章节内容</div>
 				<!-- 小说名字 -->
 				<div class="L-title">
 					<div class="L-maintitle">
-						<div class="L-bookname" style="font-size:18px;">小说名字：<span class='booknames'></span></div>
-						<div class="L-itemname" style="font-size:20px;">
+						<div class="L-bookname" style="font-size:18px;margin-bottom: 20px;    padding-left: 30px;">小说名字：<span class='booknames'></span></div>
+						<div class="L-itemname" style="font-size:20px;padding-left: 30px;">
 							章节：
 							<input id="L-name" type="text" placeholder="名字">
 						</div>
@@ -458,6 +479,8 @@
 						},
 						success(data) {
 							alert(data);
+							$(".simditor-body").html("");
+							$("#L_name").val("");
 						}
 					})
 				}
@@ -474,12 +497,6 @@
 			                </li>
                          		`)
 				$('.L_list').append(li);
-				// 进入阅读
-				$(li).on("click", function () {
-					// console.log($(this).index())
-					localStorage.read = JSON.stringify(data[$(this).index()]);
-					location.href = "readbook.html";
-				})
 				//删除
 				$(li).children("#L_del").on('click', function () {
 					var josn = JSON.parse(localStorage.bookmsg);
@@ -501,7 +518,7 @@
 				$(li).children("#L_alter").on('click', function () {
 					var json = JSON.parse(localStorage.bookmsg);
 					$(".booknames").html(json.name);
-					//						$(".L-img").attr('src', json.bookimg);
+					$(".L-img").attr('src', json.bookimg);
 					var chap = data[$(this).parent().index()]
 					$.ajax({
 						url: href + '/chapreset',
@@ -683,6 +700,14 @@
 			myimg.style.display = 'none';
 			log.style.display = 'block';
 		}
+		//返回首页
+		$('.logo').on('click',function(){
+			location.href='index.html';
+		})
+		//返回
+		$('.back').on('click',function(){
+			location.href='mymsg.html';
+		})
 	</script>
 </body>
 
