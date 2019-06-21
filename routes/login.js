@@ -138,19 +138,33 @@ router.post('/resou', function (req, res) {
         }
     })
 });
+// 查询收藏书的bookid
+router.get('/selectbookid', function (req, res) {
+    var json=req.query;
+    pool.conn({
+        sql: "select * from createbook where uid=?",
+        arr:[json.uid],
+        success(data) {
+            res.send(data);
+        },
+        error(err) {
+            res.send(err);
+        }
+    })
+});
 // 添加收藏
 router.post('/collect', function (req, res) {
     var json = req.body;
-    console.log(json);
     pool.conn({
-        sql: "select * from collection where uid="+json.bookid,
+        sql: "select * from collection where loginid=? and bookid=?",
+        arr:[json.logid,json.bookid],
         success(data) {
             if (data.length) {
                 res.send("此书已收藏");
             } else {
                 pool.conn({
-                    sql: "insert into collection(uid,name,author,bookimg,loginid,bookid) values(?,?,?,?,?,?)",
-                    arr: [json.bookid,json.name, json.auth, json.bookimg, json.logid, json.bookid],
+                    sql: "insert into collection(name,author,bookimg,loginid,bookid) values(?,?,?,?,?)",
+                    arr: [json.name, json.auth, json.bookimg, json.logid, json.bookid],
                     success(data) {
                         res.send("收藏成功");
                     },
@@ -234,28 +248,7 @@ router.get('/loguid', function (req, res) {
             res.send(err);
         }
     })
-});
-
-// // 章节详情
-// router.post('/chap', function (req, res) {
-//     var json = req.body;
-//     pool.conn({
-//         sql: 'select * from chap where bookid=?',
-//         arr: [json.uid],
-//         success(data) {
-//             if (data.length) {
-//                 var result = data;
-//                 res.send(result);
-//             } else {
-//                 res.send(data);
-//             }
-//         },
-//         error(err) {
-//             res.send(err);
-//         }
-//     })
-// });
-
+})
 // 章节列表
 router.get('/chaplist', function (req, res) {
     var json = req.query;

@@ -45,7 +45,8 @@
 
 		.readmain {
 			width: 100%;
-			min-height: 500px;
+			min-height: 600px;
+			word-wrap: break-word;
 		}
 	</style>
 </head>
@@ -183,7 +184,7 @@
 
 
 	<script>
-		var href = 'http://192.168.43.239:8000';
+		var href = 'http://localhost:8000';
 		//获取登录状态
 		if (localStorage.user) {
 			// console.log(123);
@@ -338,14 +339,13 @@
 		}
 		//退出登录
 		btn_out.onclick = function () {
-			localStorage.clear();
-			location.href = "index.html";
+			localStorage.user="";
 			myimg.style.display = 'none';
 			log.style.display = 'block';
 		}
 		//返回
 		$('.fh').on('click',function(){
-			location.href='chap.html';
+			history.back();
 		})
 		//返回首页
 		$('.logo').on('click',function(){

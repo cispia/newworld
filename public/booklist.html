@@ -26,7 +26,6 @@
 		.bookhistory {
 			width: 100%;
 			min-height: 200px;
-			/* background-color: orange; */
 			padding-bottom: 10px;
 			border: 2px solid green;
 			margin-bottom: 5px;
@@ -39,29 +38,37 @@
 			padding-left: 15px;
 		}
 
-		.list_ul,
-		.history_ul {
+		.list_ul{
 			width: 100%;
-			height: 300px;
+			height: 750px;
+			overflow: hidden;
 			border-top: 2px solid;
 		}
 
-		.list_ul li,
-		.history_ul li {
+		.list_ul li{
 			width: 20%;
 			float: left;
-			margin: 10px 15px;
+			height: 350px;
+			margin: 10px 28px;
 			border: 1px solid;
 		}
-
+		.bookauthor span{
+			margin-bottom: 10px;
+		}
 		.bookimg {
 			width: 100%;
-			height: 230px;
+			margin-bottom: 10px;
+			height: 270px;
 		}
 
 		.bookimg img {
 			width: 100%;
+			transition: .35s;
 			height: 100%;
+		}
+		.bookimg img:hover{
+			box-shadow: 0 0 5px 5px rgba(0,0,0,.2);
+			transition: .35s;
 		}
 	</style>
 </head>
@@ -190,7 +197,7 @@
 	</div>
 	<!--结束-->
 	<script>
-		var href = 'http://192.168.43.239:8000';
+		var href = 'http://localhost:8000';
 		//获取登录状态
 		if (localStorage.user) {
 			// console.log(123);
@@ -217,11 +224,12 @@
 					if(data.length==0){
 						$('.list_ul').text('您还没有收藏');
 					}
-					$.each(data, function (i, o) {
+					//
+					 $.each(data, function (i, o) { 
 						var li = $(`
 						<li style="position: relative;">
 								<span class="glyphicon glyphicon-remove-sign b_remove" style="position: absolute;top:-5px;right:-5px;font-size:20px;color:red;display: none;"></span>
-								<a href="details.html" style="text-decoration: none">
+						<a href="details.html" style="text-decoration: none">
 						<div class="bookimg">
 							<img src="${o.bookimg}" alt="">
 						</div>
@@ -232,10 +240,21 @@
 						</a>
 					</li>
 						`)
+						// $(".list_ul").css("width",$(".donelist li").length*parseFloat($(".donelist li").eq(0).css("width"))+'px')
 						$('.list_ul').append(li);
 						$(li).on('click',function(){
-						localStorage.bookmsg=JSON.stringify(data[$(this).index()]);
-					})
+							$.ajax({
+								type:'get',
+								url:href+'/selectbookid',
+								data:{
+									uid:data[$(this).index()].bookid
+								},
+								success(newdata){
+									console.log(newdata[0]);
+									localStorage.bookmsg=JSON.stringify(newdata[0]);
+								}
+							})
+						})
 					})
 					// 删除收藏
 					$('.b_remove').on('click', function () {
@@ -352,7 +371,7 @@
 		}
 		//退出登录
 		btn_out.onclick = function () {
-			localStorage.clear();
+			localStorage.user="";
 			myimg.style.display = 'none';
 			log.style.display = 'block';
 		}

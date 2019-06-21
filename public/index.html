@@ -31,6 +31,7 @@
 		.img {
 			width: 100%;
 			height: 100%;
+			border-radius: 50%;
 		}
 
 		#search {
@@ -40,12 +41,19 @@
 		#text {
 			width: 50%;
 			margin-right: -5px;
+			border-radius: 15px 0px 0px 15px;
+			padding-left: 10px;
+			outline-style: none;
 			height: 30px;
+			border-style: none;
+			border: 1px solid;
 		}
 
 		#btn_search {
 			width: 80px;
 			height: 30px;
+			outline-style: none;
+			border-radius: 0px 15px 15px 0px;
 			border-style: none;
 		}
 
@@ -53,44 +61,66 @@
 			width: 50%;
 			margin: 10px auto;
 			line-height: 30px;
+			height: 30px;
+			/* overflow: hidden; */
+		}
+
+		#tuijian .rs {
+			width: 80%;
+			height: 30px;
 			overflow: hidden;
 		}
 
 		#tuijian .rs a {
+			display: inline-block;
+			padding: 0px 15px;
 			margin-right: 10px;
 			text-decoration: none;
 			color: #000;
+			border: 1px solid #ccc;
+			border-radius: 20px;
+			line-height: 24px;
 		}
 
 		#list {
 			width: 100%;
-			background: red;
 		}
 
 		#ul li {
-			width: 27%;
+			width: 22%;
 			height: 400px;
 			float: left;
 			list-style: none;
-			background: #ccc;
-			margin: 3%;
+			background: rgba(206, 243, 255, 0.438);
+			margin: 1.5%;
 		}
+
 
 		#ul li img {
 			width: 80%;
 			margin: 5% 10% 5% 10%;
 			height: 300px;
+			transition: .35s;
+		}
+
+		#ul li img:hover {
+			transform: scale(1.1);
+			box-shadow: 0 0 5px 5px rgba(0, 0, 0, .2);
+			transition: .35s;
 		}
 
 		#ul li p {
-			margin: 0 0 0 10%;
+			margin: 0 0 10px 10%;
+			color: #000;
 			line-height: 30px;
 			font-size: 20px;
 		}
 
 		#ul li span {
-			margin: 0 0 0 10%;
+			margin: 0 0 0 14%;
 			font-size: 18px;
+			color: #000;
+			line-height: 30px;
 		}
 
 		#booklist {
@@ -130,6 +160,7 @@
 		}
 
 		#jianjie {
+			overflow: hidden;
 			margin: 20px 0 0 20%;
 			width: 80%;
 		}
@@ -140,7 +171,8 @@
 			background: #ccc;
 			border-radius: 50%;
 		}
-		.back{
+
+		.back {
 			font-size: 45px;
 			height: 50px;
 			background: none;
@@ -171,7 +203,7 @@
 		</div>
 		<!--头像-->
 		<div id="myimg" style="float: right;width: 70px;height: 70px;display: none;position: relative;">
-			<img src="" alt="" id="imgs" style="width: 70px;height: 70px;border-radius: 50%;" />
+			<img src="" alt="" id="imgs" style="padding:6px;width: 70px;height: 70px;border-radius: 50%;" />
 			<div id="div"
 				style="width: 130px;height: 110px;background: #aaa;text-align: center;line-height: 30px;display: none;margin-left: -20px;position: absolute;left: 0;bottom:-110px;z-index: 10;">
 				<p style="border-bottom: 1px dotted #fff;">
@@ -190,7 +222,7 @@
 <!-- 头部结束 -->
 
 <!-- 内容 -->
-<div class="container" id="con" style="min-height:500px;border:1px solid red;">
+<div class="container" id="con" style="min-height:1000px;border:1px solid red;">
 	<!--搜索-->
 	<div id="search">
 		<input type="text" id="text" placeholder="搜索小说">
@@ -199,8 +231,8 @@
 
 	<!--搜索结束-->
 	<!--推荐搜索-->
-	<div id="tuijian">
-		推荐搜索：<div style="display: inline-block" class="rs"></div>
+	<div id="tuijian"> <span style="display: block;float: left;">推荐搜索：</span>
+		<div style="display:block;float: left;" class="rs"></div>
 	</div>
 	<!--推荐搜索结束-->
 
@@ -217,7 +249,8 @@
 <!--搜索列表-->
 <div class="container" id="booklist">
 	<!--返回-->
-	<div style="height:50px;text-align: center;margin-top: 10px;border-bottom: 1px solid #ccc;font-size: 20px;line-height: 50px;">
+	<div
+		style="height:50px;text-align: center;margin-top: 10px;border-bottom: 1px solid #ccc;font-size: 20px;line-height: 50px;">
 		<button class="back glyphicon glyphicon-arrow-left"></button>
 		搜索列表
 	</div>
@@ -310,7 +343,10 @@
 <!---->
 <script src="javascripts/jquery.min.js"></script>
 <script>
-	var href = 'http://192.168.43.239:8000';
+	window.onresize = function () {
+		$(".foot").css("bottom", "0");
+	}
+	var href = 'http://localhost:8000';
 	//搜索
 	$('#btn_search').on('click', function () {
 		if ($('#text').val() == '') {
@@ -339,6 +375,9 @@
 									<p id="jianjie">${o.briefing}</p>
 								</li>`)
 						$('#uls').append(li);
+						$(li).on("click", function () {
+							localStorage.bookmsg = JSON.stringify(data[$(this).index()]);
+						})
 					})
 				}
 			})
@@ -349,33 +388,36 @@
 		url: href + '/resou',
 		type: 'post',
 		success(data) {
-			// console.log(data);
-			data = data.splice(3, 3);
-			$.each(data, function (i, o) {
-				var li = $(`
+			if (data.length == 0) {
+				$('#ul').text("暂时没有数据");
+				return;
+			} else {
+				data = data.splice(0, 8);
+				$.each(data, function (i, o) {
+					var li = $(`
 					<li>
-					<a href="details.html" style="text-decoration: none; color: #fff;">
+					<a href="details.html" style="text-decoration: none;">
 						<img src="${o.bookimg}" alt="" />
 						<p>《${o.name}》</p>
 						<span>${o.author}</span>
 					</a>
 				</li>`)
-				var span = $(`<a>${o.name}</a>`)
-				$(span).on('click', function () {
-					$.ajax({
-						type: 'post',
-						url: href + '/seatch',
-						data: {
-							hotkey: $(this).text()
-						},
-						success(data) {
-							console.log(data);
-							$('#text').val('');
-							$('#uls').empty();
-							con.style.display = 'none';
-							booklist.style.display = 'block';
-							$.each(data, function (i, o) {
-								var li = $(`<li>
+					var span = $(`<a>${o.name}</a>`)
+					$(span).on('click', function () {
+						$.ajax({
+							type: 'post',
+							url: href + '/seatch',
+							data: {
+								hotkey: $(this).text()
+							},
+							success(num) {
+								console.log(num);
+								$('#text').val('');
+								$('#uls').empty();
+								con.style.display = 'none';
+								booklist.style.display = 'block';
+								$.each(num, function (i, o) {
+									var li = $(`<li>
 									<a href="details.html">
 										<img src="${o.bookimg}" />
 									</a>
@@ -383,17 +425,21 @@
 									<p id="author">${o.author}</p>
 									<p id="jianjie">${o.briefing}</p>
 								</li>`)
-								$('#uls').append(li);
-							})
-						}
+									$('#uls').append(li);
+									$(li).on('click', function () {
+										localStorage.bookmsg = JSON.stringify(num[$(this).index()]);
+									})
+								})
+							}
+						})
+					})
+					$('.rs').append(span);
+					$('#ul').append(li);
+					$(li).on('click', function () {
+						localStorage.bookmsg = JSON.stringify(data[$(this).index()]);
 					})
 				})
-				$('.rs').append(span);
-				$('#ul').append(li);
-				$(li).on('click', function () {
-					localStorage.bookmsg = JSON.stringify(data[$(this).index()]);
-				})
-			})
+			}
 		}
 	})
 	//获取登录状态
@@ -490,12 +536,13 @@
 	}
 	//退出登录
 	btn_out.onclick = function () {
-		localStorage.clear();
+		localStorage.user = "";
 		myimg.style.display = 'none';
 		log.style.display = 'block';
 	}
 	//返回
-	$('.back').on('click',function(){
+	$('.back').on('click', function () {
+		history.back();
 		con.style.display = 'block';
 		booklist.style.display = 'none';
 	})

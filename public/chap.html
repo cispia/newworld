@@ -46,14 +46,26 @@
 		}
 
 		.L_cover-center {
+			width: 70%;
 			float: left;
 		}
 
+		.L_title {
+			width: 100%;
+		}
+
+		.L_list {
+			min-height: 200px;
+		}
+
 		.L_author {
+			width: 100%;
 			color: #ccc;
 		}
 
 		.L_text {
+			width: 100%;
+			overflow: hidden;
 			font-size: 14px;
 			color: #ccc;
 		}
@@ -123,21 +135,24 @@
 			text-align: center;
 		}
 
-		.L_off,.L-off {
+		.L_off,
+		.L-off {
 			width: 80px;
 			height: 40px;
 			float: right;
 			margin-right: 15px;
 		}
 
-		.L_on ,.L-on{
+		.L_on,
+		.L-on {
 			width: 80px;
 			height: 40px;
 			float: right;
 			margin-right: 15px;
 		}
 
-		.L_img ,.L-img{
+		.L_img,
+		.L-img {
 			position: absolute;
 			right: 10px;
 			top: 5px;
@@ -145,24 +160,27 @@
 			height: 150px;
 			background: chartreuse;
 		}
-		.L-title{
+
+		.L-title {
 			height: 130px;
 		}
-		.top{
+
+		.top {
 			height: 50px;
 			text-align: center;
 			line-height: 50px;
 			font-size: 22px;
 			border-bottom: 1px solid;
 		}
-		.back{
+
+		.back {
 			width: 100px;
 			height: 50px;
 			float: left;
 			outline: none;
 			border-style: none;
 			background: none;
-   			font-size: 45px;
+			font-size: 45px;
 		}
 	</style>
 </head>
@@ -173,7 +191,8 @@
 	<div class="head" style="background:#dcdcdc4d;width: 100%;height: 70px;">
 		<div class="container">
 			<div class="logo" style="width: 100px;height: 70px;display: inline-block;">
-				<img src="http://www.cnlogo8.com/d/file/2017-04-13/5a97b5fd70fa3a059e2ac9cc4a891989.png" alt="返回首页" style="width: 100%;height: 100%;">
+				<img src="http://www.cnlogo8.com/d/file/2017-04-13/5a97b5fd70fa3a059e2ac9cc4a891989.png" alt="返回首页"
+					style="width: 100%;height: 100%;">
 			</div>
 			<!--登录注册-->
 			<div id="log"
@@ -202,7 +221,7 @@
 	</div>
 	<!-- 头部结束 -->
 	<!-- 内容 -->
-	<div class="container" style="min-height:500px;border:1px solid #ccc;padding:0;">
+	<div class="container" style="min-height:700px;border:1px solid #ccc;padding:0;">
 		<div class="top"><button class="back glyphicon glyphicon-arrow-left"></button>章节更新</div>
 		<!-- 封面 -->
 		<div class='L_cover' style="overflow:hidden">
@@ -258,7 +277,8 @@
 				<!-- 小说名字 -->
 				<div class="L-title">
 					<div class="L_maintitle">
-						<div class="L_bookname" style="font-size:18px;margin-bottom: 20px;padding-left: 30px;">小说名字：<span class='bookname'></span></div>
+						<div class="L_bookname" style="font-size:18px;margin-bottom: 20px;padding-left: 30px;">
+							小说名字：<span class='bookname'></span></div>
 						<div class="L_itemname" style="font-size:20px;padding-left: 30px;">
 							章节：
 							<input id="L_name" type="text" placeholder="名字">
@@ -293,7 +313,8 @@
 				<!-- 小说名字 -->
 				<div class="L-title">
 					<div class="L-maintitle">
-						<div class="L-bookname" style="font-size:18px;margin-bottom: 20px;    padding-left: 30px;">小说名字：<span class='booknames'></span></div>
+						<div class="L-bookname" style="font-size:18px;margin-bottom: 20px;    padding-left: 30px;">
+							小说名字：<span class='booknames'></span></div>
 						<div class="L-itemname" style="font-size:20px;padding-left: 30px;">
 							章节：
 							<input id="L-name" type="text" placeholder="名字">
@@ -383,6 +404,7 @@
 	</div>
 	<!--结束-->
 	<script>
+		var href = 'http://localhost:8000';
 		//富文本
 		var editor = new Simditor({
 			textarea: $('#editor')
@@ -399,7 +421,6 @@
 			log.style.display = 'none';
 			myimg.style.display = 'block';
 		}
-		var href = 'http://192.168.43.239:8000';
 		if (localStorage.bookmsg) {
 			var json = JSON.parse(localStorage.bookmsg);
 			$(".L_title").html(json.name);
@@ -583,32 +604,43 @@
 
 		//评论
 		$('#btn_pl').on('click', function () {
-			var user = JSON.parse(localStorage.user);
-			var book = JSON.parse(localStorage.bookmsg);
-			$.ajax({
-				type: 'post',
-				url: href + '/insert',
-				data: {
-					user: user.user,
-					img: user.img,
-					bookid: book.uid,
-					pltext: $('#text').val()
-				},
-				success(data) {
-					$('.uls').empty();
-					console.log(data);
-					$.each(data, function (i, o) {
-						var li = $(`<li class='L_lb' style="overflow:hidden">
+			if (!localStorage.user || !localStorage.bookmsg) {
+				alert("请先登录");
+				return;
+			} else {
+				if ($('#text').val() == "") {
+					alert("评论不能为空!");
+					return;
+				} else {
+					var user = JSON.parse(localStorage.user);
+					var book = JSON.parse(localStorage.bookmsg);
+					$.ajax({
+						type: 'post',
+						url: href + '/insert',
+						data: {
+							user: user.user,
+							img: user.img,
+							bookid: book.uid,
+							pltext: $('#text').val()
+						},
+						success(data) {
+							$('.uls').empty();
+							console.log(data);
+							$.each(data, function (i, o) {
+								var li = $(`<li class='L_lb' style="overflow:hidden">
 								<img src="${o.img}" class='tx'>
 								<div class='left' style="float:left;">
 									<h3 class='L_bt'>${o.user}</h3>
 									<p class='L_intro'>${o.text_pl}</p>
 								</div>
 							</li>`)
-						$('.uls').append(li)
+								$('.uls').append(li)
+							})
+							$('#text').val("");
+						}
 					})
 				}
-			})
+			}
 		})
 		//头像
 		var imgurl = '';
@@ -696,17 +728,17 @@
 		}
 		//退出登录
 		btn_out.onclick = function () {
-			localStorage.clear();
+			localStorage.user = "";
 			myimg.style.display = 'none';
 			log.style.display = 'block';
 		}
 		//返回首页
-		$('.logo').on('click',function(){
-			location.href='index.html';
+		$('.logo').on('click', function () {
+			location.href = 'index.html';
 		})
 		//返回
-		$('.back').on('click',function(){
-			location.href='mymsg.html';
+		$('.back').on('click', function () {
+			history.back();
 		})
 	</script>
 </body>

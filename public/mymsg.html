@@ -60,6 +60,15 @@
 			border-style: none;
 		}
 
+		.jump img {
+			transition: .35s;
+		}
+
+		.jump img:hover {
+			box-shadow: 0 0 5px 5px rgba(0, 0, 0, .2);
+			transition: .35s;
+		}
+
 		.done {
 			width: 70%;
 			display: inline-block;
@@ -83,6 +92,7 @@
 
 		.donelist {
 			position: absolute;
+			transition: .5s;
 		}
 
 		.donelist li {
@@ -95,7 +105,6 @@
 
 		.donelist li img {
 			width: 100%;
-			padding: 10px;
 			height: 260px;
 			margin-bottom: 10px;
 		}
@@ -151,21 +160,53 @@
 			margin: 0;
 			line-height: 40px;
 		}
-		.top{
+
+		.top {
 			height: 50px;
 			text-align: center;
 			line-height: 50px;
 			font-size: 22px;
 			border-bottom: 1px solid;
 		}
-		.back{
+		#left{
+			width: 50px;
+			height: 50px;
+			position: absolute;
+			top: 200px;
+			left: 10px;
+			font-size: 60px;
+			line-height: 50px;
+			text-align: center;
+			transition: .5s;
+			z-index: 5;
+			background: rgba(0, 0, 0, 0.4);
+			color: #fff;
+			display: none;
+		}
+		#right{
+			width: 50px;
+			height: 50px;
+			transition: .5s;
+			position: absolute;
+			top: 200px;
+			right: 10px;
+			font-size: 60px;
+			line-height: 50px;
+			text-align: center;
+			display: none;
+			z-index: 5;
+			background: rgba(0, 0, 0, 0.4);
+			color: #fff;
+		}
+		.back {
 			width: 100px;
 			height: 50px;
 			float: left;
 			outline: none;
 			border-style: none;
 			background: none;
-   			font-size: 45px;
+			font-size: 45px;
+			
 		}
 	</style>
 </head>
@@ -176,7 +217,8 @@
 	<div class="head" style="background:#dcdcdc4d;width: 100%;height: 70px;">
 		<div class="container">
 			<div class="logo" style="width: 100px;height: 70px;display: inline-block;">
-				<img src="http://www.cnlogo8.com/d/file/2017-04-13/5a97b5fd70fa3a059e2ac9cc4a891989.png" alt="返回首页" style="width: 100%;height: 100%;">
+				<img src="http://www.cnlogo8.com/d/file/2017-04-13/5a97b5fd70fa3a059e2ac9cc4a891989.png" alt="返回首页"
+					style="width: 100%;height: 100%;">
 			</div>
 			<!--登录注册-->
 			<div id="log"
@@ -225,6 +267,8 @@
 			<ul class="donelist clearfix">
 
 			</ul>
+			<span id="left"><</span>
+			<span id="right">></span>
 		</div>
 		<!-- </div> -->
 	</div>
@@ -342,7 +386,15 @@
 	</div>
 	<!--结束-->
 	<script>
-		var href = 'http://192.168.43.239:8000';
+		var href = 'http://localhost:8000';
+		$(".done").on("mouseover",function(){
+			$("#left").css("display","block");
+			$("#right").css("display","block");
+		})
+		$(".done").on("mouseout",function(){
+			$("#left").css("display","none");
+			$("#right").css("display","none");
+		})
 		//获取登录状态
 		if (localStorage.user) {
 			// console.log(123);
@@ -366,10 +418,10 @@
 				}
 			})
 		}
-		if(localStorage.user==""){
-        alert("当前没有书籍信息,即将返回首页");
-			location.href="index.html";
-    }
+		if (localStorage.user == "") {
+			alert("当前没有书籍信息,即将返回首页");
+			location.href = "index.html";
+		}
 		var bookimgurl = '';
 		//封面上传
 		$(".bookimg").on("change", function () {
@@ -410,6 +462,7 @@
 					$("#title").val('');
 					$("#author").val('');
 					$("#briefing").val('');
+					$(".fengm").attr("src", "");
 					bookimgurl = '';
 					alert('创建成功')
 					$('.donelist').empty();
@@ -422,31 +475,32 @@
 			if (data instanceof Array) {
 				$.each(data, function (i, o) {
 					var li = $(`<li>
+							<a href='details.html' class='jump'>
 								<img src="${o.bookimg}" alt="">
-								<p>《${o.name}》</p>
+							</a>
+								<p style='overflow:hidden;'>《${o.name}》</p>
 								<button id='fabu'>发布</button>
 								<button id='del'>删除</button>
 							</li>
 								`)
 					$('.donelist').append(li)
-					// console.log($(".donelist li").eq(0).css("width"))
-					$(".donelist").css("width",$(".donelist li").length*parseFloat($(".donelist li").eq(0).css("width"))+'px')
+					$(".donelist").css("width", $(".donelist li").length * parseFloat($(".donelist li").eq(0).css("width")) + 'px')
 					$(li).children("#fabu").on('click', function () {
 						localStorage.bookmsg = JSON.stringify(data[$(this).parent().index()]);
 						location.href = "chap.html";
 					})
-					$(li).children("#del").on('click',function(){
-						// console.log(data[$(this).parent().index()]);
+					$(li).children(".jump").on('click', function () {
+						localStorage.bookmsg = JSON.stringify(data[$(this).parent().index()]);
+					})
+					$(li).children("#del").on('click', function () {
 						$.ajax({
-							type:'get',
-							url:href+'/delbook',
-							data:{
-								uid:data[$(this).parent().index()].uid
+							type: 'get',
+							url: href + '/delbook',
+							data: {
+								uid: data[$(this).parent().index()].uid
 							},
-							success(data){
-								// console.log(data);
-								$('.donelist').empty();
-								blist(data);
+							success(data) {
+								location.reload();
 							}
 						})
 					})
@@ -458,9 +512,32 @@
 
 
 		}
+
+		//
+		var num = 0;
+		right.onclick = function () {
+			num++;
+			if (num > $(".donelist li").length-1) {
+				num = 0;
+			}
+			move();
+		}
+		left.onclick = function () {
+			num--;
+			if (num < 0) {
+				num = $(".donelist li").length-1;
+			}
+			move();
+		}
+		function move() {
+			$(".donelist").css({
+				transition:".5s",
+				transform: "translateX(-"+(parseFloat($(".donelist li").eq(0).css("width"))*num+30)+"px)"
+			})
+		}
 		//头像
 		var imgurl = '';
-		$(".files").on("change", function() {
+		$(".files").on("change", function () {
 			var files = $(this)[0].files[0];
 			var d = new FormData;
 			d.append("tx", files);
@@ -484,10 +561,10 @@
 		}
 		// 登录
 		$("#btn_in").on("click", () => {
-			if($("#user_in").val() == "" || $("#pass_in").val() == "") {
+			if ($("#user_in").val() == "" || $("#pass_in").val() == "") {
 				alert("密码或账号不能为空");
 				return;
-			} else if(isChineseChar($("#user_in").val()) || isChineseChar($("#pass_in").val())) {
+			} else if (isChineseChar($("#user_in").val()) || isChineseChar($("#pass_in").val())) {
 				alert("密码和账号不能为中文");
 				return;
 			} else {
@@ -499,7 +576,7 @@
 						pass: $("#pass_in").val(),
 					},
 					success(data) {
-						if(data.length == 0) {
+						if (data.length == 0) {
 							alert('账号或密码错误');
 							return;
 						}
@@ -515,10 +592,10 @@
 		})
 		// 注册
 		$("#btn_up").on("click", () => {
-			if($("#user_up").val() == "" || $("#pass_up").val() == "" || $("#name_up").val() == "" || imgurl == "") {
+			if ($("#user_up").val() == "" || $("#pass_up").val() == "" || $("#name_up").val() == "" || imgurl == "") {
 				alert("密码或账号不能为空");
 				return;
-			} else if(isChineseChar($("#user_up").val()) || isChineseChar($("#pass_up").val())) {
+			} else if (isChineseChar($("#user_up").val()) || isChineseChar($("#pass_up").val())) {
 				alert("密码和账号不能为中文");
 				return;
 			} else {
@@ -545,18 +622,17 @@
 		}
 		//退出登录
 		btn_out.onclick = function () {
-			console.log(111)
-			localStorage.clear();
+			localStorage.user = "";
 			myimg.style.display = 'none';
 			log.style.display = 'block';
 		}
 		//返回首页
-		$('.logo').on('click',function(){
-			location.href='index.html';
+		$('.logo').on('click', function () {
+			location.href = 'index.html';
 		})
 		//返回
-		$('.back').on('click',function(){
-			location.href='index.html';
+		$('.back').on('click', function () {
+			history.back();
 		})
 	</script>
 </body>

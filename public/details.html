@@ -41,6 +41,7 @@
         }
 
         .L_cover-center {
+            width: 70%;
             float: left;
         }
 
@@ -49,6 +50,7 @@
         }
 
         .L_text {
+            width: 100%;
             font-size: 14px;
             color: #ccc;
         }
@@ -67,7 +69,9 @@
         .L_chap {
             border-bottom: 1px solid #ccc;
         }
-
+        .L_list{
+            min-height: 200px;
+        }
         .L_list li {
             height: 40px;
             line-height: 40px;
@@ -98,7 +102,9 @@
             font-size: 22px;
             border-bottom: 1px solid;
         }
-
+        .uls{
+            min-height: 200px;
+        }
         .back {
             width: 100px;
             height: 50px;
@@ -128,7 +134,7 @@
             </div>
             <!--头像-->
             <div id="myimg" style="float: right;width: 70px;height: 70px;display: none;position: relative;">
-                <img src="https://ss1.baidu.com/9vo3dSag_xI4khGko9WTAnF6hhy/image/h%3D300/sign=ad628627aacc7cd9e52d32d909032104/32fa828ba61ea8d3fcd2e9ce9e0a304e241f5803.jpg"
+                <img src=""
                     alt="" id="imgs" style="width: 70px;height: 70px;border-radius: 50%;" />
                 <div id="div"
                     style="width: 130px;height: 110px;background: #aaa;text-align: center;line-height: 30px;display: none;margin-left: -20px;position: absolute;left: 0;bottom: -110px;z-index: 10;">
@@ -148,7 +154,7 @@
     <!-- 头部结束 -->
     <!-- 内容 -->
     <div class="container" style="min-height:500px;border:1px solid red;">
-        <div class="top"><button class="back glyphicon glyphicon-arrow-left"></button>个人中心</div>
+        <div class="top"><button class="back glyphicon glyphicon-arrow-left"></button>小说详情</div>
         <!-- 封面 -->
         <div class='L_cover' style="overflow:hidden">
             <div class='L_cover-left'>
@@ -157,7 +163,7 @@
             <div class='L_cover-center'>
                 <h3 class='L_title'></h3>
                 <p class='L_author'></p>
-                <p class='L_text'><span class="brie"></span><span class='L_look'>查看更多</span></p>
+                <p class='L_text'><span class="brie" style="width: 100%;"></span><span class='L_look'>查看更多</span></p>
             </div>
             <!-- 收藏 -->
             <div class='L_cover-right'>
@@ -260,9 +266,10 @@
     <!--结束-->
 </body>
 <script>
+    var href = 'http://localhost:8000';
     // 收藏
     $('#L_collect').on('click', function () {
-       
+
         if (!localStorage.user) {
             // console.log(localStorage.user);
             alert('请先登录');
@@ -307,7 +314,6 @@
         alert("当前没有书籍信息,即将返回首页");
         location.href = "index.html";
     }
-    var href = 'http://192.168.43.239:8000';
     if (localStorage.bookmsg) {
         var json = JSON.parse(localStorage.bookmsg);
         $(".L_title").html(json.name);
@@ -368,33 +374,39 @@
     }
     //评论
     $('#btn_pl').on('click', function () {
-        var user = JSON.parse(localStorage.user);
-        var book = JSON.parse(localStorage.bookmsg);
-        $.ajax({
-            type: 'post',
-            url: href + '/insert',
-            data: {
-                user: user.user,
-                img: user.img,
-                bookid: book.uid,
-                pltext: $('#text').val()
-            },
-            success(data) {
-                $('.uls').empty();
-                console.log(data);
-                $.each(data, function (i, o) {
-                    var li = $(`<li class='L_lb' style="overflow:hidden">
+        if (!localStorage.user) {
+            alert("请先登录");
+            return;
+        } else {
+            var user = JSON.parse(localStorage.user);
+            var book = JSON.parse(localStorage.bookmsg);
+            $.ajax({
+                type: 'post',
+                url: href + '/insert',
+                data: {
+                    user: user.user,
+                    img: user.img,
+                    bookid: book.uid,
+                    pltext: $('#text').val()
+                },
+                success(data) {
+                    $('.uls').empty();
+                    console.log(data);
+                    $.each(data, function (i, o) {
+                        var li = $(`<li class='L_lb' style="overflow:hidden">
 								<img src="${o.img}" class='tx'>
 								<div class='left' style="float:left;">
 									<h3 class='L_bt'>${o.user}</h3>
 									<p class='L_intro'>${o.text_pl}</p>
 								</div>
 							</li>`)
-                    $('.uls').append(li)
-                })
-                $('#text').val('');
-            }
-        })
+                        $('.uls').append(li)
+                    })
+                    $('#text').val('');
+                }
+            })
+        }
+
     })
     //头像
     var imgurl = '';
@@ -482,7 +494,7 @@
     }
     //退出登录
     btn_out.onclick = function () {
-        localStorage.user='';
+        localStorage.user = '';
         myimg.style.display = 'none';
         log.style.display = 'block';
     }
@@ -492,7 +504,7 @@
     })
     //返回
     $('.back').on('click', function () {
-        location.href = 'index.html';
+        history.back();
     })
 </script>
 
