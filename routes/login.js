@@ -4,7 +4,6 @@ var pool = require("./pool");
 // 搜索小说
 router.post('/seatch', function (req, res) {
     var json = req.body.hotkey;
-    console.log(json);
     pool.conn({
         sql: 'select * from createbook where name like "%' + json + '%" or author like "%' + json + '%"',
         success(data) {
@@ -19,7 +18,7 @@ router.post('/seatch', function (req, res) {
 router.get('/pload', function (req, res) {
     var json = req.query;
     pool.conn({
-        sql: 'select * from pl where bookid=' + json.pl,
+        sql: 'select * from pl where bookid=' + json.pl+' order by uid desc',
         success(data) {
             res.send(data);
         },
@@ -111,21 +110,6 @@ router.get('/delbook', function (req, res) {
         }
     })
 });
-// // 修改个人信息
-// router.post('/updat', function (req, res) {
-//     var json = req.body;
-//     // if(json==null) return;
-//     pool.conn({
-//         sql: "update login set name=?,img=? where uid=?",
-//         arr: [json.nicheng, json.img, json.uid],
-//         success(data) {
-//             res.send("修改成功");
-//         },
-//         error(err) {
-//             res.send(err);
-//         }
-//     })
-// });
 // 热搜
 router.post('/resou', function (req, res) {
     pool.conn({
@@ -231,13 +215,14 @@ router.post('/insert', function (req, res) {
     })
 });
 // 已创建的小说
-router.get('/loguid', function (req, res) {
-    var json = req.query;
+router.post('/loguid', function (req, res) {
+    var json = req.body;
     pool.conn({
         sql: 'select * from createbook where loginid=?',
         arr: [json.logid],
         success(data) {
             if (data.length) {
+                console.log(data.length);
                 var result = data;
                 res.send(result);
             } else {
@@ -290,7 +275,6 @@ router.get('/read', function (req, res) {
 // 详情章节列表
 router.post('/bookid', function (req, res) {
     var json = req.body;
-    // console.log(json)
     pool.conn({
         sql: "select * from chap where  bookid=?",
         arr: [json.bookid],
@@ -379,7 +363,6 @@ router.post('/chapup', function (req, res) {
 // 创建内容
 router.post('/content', function (req, res) {
     var json = req.body;
-    console.log(json)
     pool.conn({
         sql: "insert into content(chapid,text) values(?,?)",
         arr: [json.chap, json.text],
@@ -391,20 +374,6 @@ router.post('/content', function (req, res) {
         }
     })
 });
-// //更新小说的rs次数
-// router.get("/uprsid",(req,res)=>{
-//     var json=req.query;
-//     pool.conn({
-//         sql: "update createbook set rsid=? where uid=?",
-//         arr: [json.rsid, json.uid],
-//         success(data) {
-//             res.send("点击率以增加");
-//         },
-//         error(err) {
-//             res.send(err);
-//         }
-//     })
-// })
 // 创建书名
 router.post('/bookup', function (req, res) {
     var json = req.body;

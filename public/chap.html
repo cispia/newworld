@@ -8,6 +8,7 @@
 	<title>章节发布</title>
 	<script src="./javascripts/jquery.min.js"></script>
 	<link rel="stylesheet" type="text/css" href="styles/simditor.css" />
+<link rel="icon" href="https://ss3.bdstatic.com/70cFv8Sh_Q1YnxGkpoWK1HF6hhy/it/u=850912414,2786476061&fm=26&gp=0.jpg">
 	<!-- 最新版本的 Bootstrap 核心 CSS 文件 -->
 	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@3.3.7/dist/css/bootstrap.min.css"
 		integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
@@ -107,9 +108,46 @@
 		}
 
 		.L_lb {
-			border: 1px solid #ccc;
-			margin-top: 10px;
-		}
+            border: 1px solid #ccc;
+            margin-top: 10px;
+            height: 100px;
+            position: relative;
+        }
+
+        .left {
+            width: 85%;
+            height: 100px;
+        }
+
+        .L_intro {
+            height: 22px;
+            word-break: break-all;
+            overflow: hidden;
+        }
+
+        .fu {
+            width: 87%;
+            max-height: 300px;
+			overflow: auto;
+            position: absolute;
+            z-index: 10;
+            background: #dcdcdc;
+            display: none;
+            top: 58px;
+        }
+
+        .fu .sq {
+            width: 100px;
+            height: 20px;
+            text-align: center;
+            line-height: 20px;
+            border: 1px solid #ccc;
+            display: block;
+            float: right;
+            border-radius: 8px;
+            background: rgb(241, 229, 255);
+            margin: 10px;
+        }
 
 		.tx {
 			width: 100px;
@@ -191,7 +229,7 @@
 	<div class="head" style="background:#dcdcdc4d;width: 100%;height: 70px;">
 		<div class="container">
 			<div class="logo" style="width: 100px;height: 70px;display: inline-block;">
-				<img src="http://www.cnlogo8.com/d/file/2017-04-13/5a97b5fd70fa3a059e2ac9cc4a891989.png" alt="返回首页"
+				<img src="http://www.cnlogo8.com/d/file/2017-04-13/5a97b5fd70fa3a059e2ac9cc4a891989.png" title="返回首页"
 					style="width: 100%;height: 100%;">
 			</div>
 			<!--登录注册-->
@@ -404,7 +442,7 @@
 	</div>
 	<!--结束-->
 	<script>
-		var href = 'http://localhost:8000';
+		var href = 'http://192.168.43.239:8000';
 		//富文本
 		var editor = new Simditor({
 			textarea: $('#editor')
@@ -453,15 +491,24 @@
 				success(data) {
 					$('.uls').empty();
 					$.each(data, function (i, o) {
-						var li = $(`<li class='L_lb' style="overflow:hidden">
+						var li = $(`<li class='L_lb'>
 								<img src="${o.img}" class='tx'>
 								<div class='left' style="float:left;">
 									<h3 class='L_bt'>${o.user}</h3>
 									<p class='L_intro'>${o.text_pl}</p>
+									<div class="fu">${o.text_pl}<span class="sq">收起</span></div>
 								</div>
 							</li>
 						`)
 						$('.uls').append(li);
+						$(li).find(".L_intro").on("click", function () {
+							$(this).parent().parent().find(".fu").slideDown(1000);
+							$(this).slideUp(300);
+						})
+						$(li).find(".sq").on("click", function () {
+							$(this).parent().slideUp(300);
+							$(this).parent().parent().find(".L_intro").slideDown(1000);
+						})
 					})
 
 				}
@@ -627,14 +674,23 @@
 							$('.uls').empty();
 							console.log(data);
 							$.each(data, function (i, o) {
-								var li = $(`<li class='L_lb' style="overflow:hidden">
+								var li = $(`<li class='L_lb'>
 								<img src="${o.img}" class='tx'>
 								<div class='left' style="float:left;">
 									<h3 class='L_bt'>${o.user}</h3>
 									<p class='L_intro'>${o.text_pl}</p>
+									<div class="fu">${o.text_pl}<span class="sq">收起</span></div>
 								</div>
 							</li>`)
-								$('.uls').append(li)
+								$('.uls').append(li);
+								$(li).find(".L_intro").on("click", function () {
+									$(this).parent().parent().find(".fu").slideDown(1000);
+									$(this).slideUp(300);
+								})
+								$(li).find(".sq").on("click", function () {
+									$(this).parent().slideUp(300);
+									$(this).parent().parent().find(".L_intro").slideDown(1000);
+								})
 							})
 							$('#text').val("");
 						}
